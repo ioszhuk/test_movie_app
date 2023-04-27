@@ -10,6 +10,10 @@
 
 # production
 /build
+/dest
+
+# IDE - VSCode
+.vscode/*
 
 # misc
 .DS_Store
