@@ -1,4 +1,4 @@
-# MovieX (React.js App)
+# MovieX (React App)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -13,7 +13,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 #### Technologies
 
-- [ReactJS](https://reactjs.org/) (18.2 or higher)
+- [ReactJS](https://reactjs.org/)
 - [React Router](https://github.com/ReactTraining/react-router)
 - [Scss](http://sass-lang.com/)
 - [RxJS](https://rxjs.dev/)
