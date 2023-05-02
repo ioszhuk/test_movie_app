@@ -1,23 +1,24 @@
-# MovieX (Create React App)
+# MovieX (React.js App)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-### Application contains the below features
+#### Application contains the below features
 
 - **Movies List**
   - List Movies
   - Search
-  - Clicking on a particular movie will redirect you to the selected &#39;Movie detail&#39; page
 - **Movie detail**
   - Show selected movie detail information
   - Navigate back to &#39;Movie list&#39;
 
 #### Technologies
 
-- [ReactJS](https://reactjs.org/) (16.9 or higher)
+- [ReactJS](https://reactjs.org/) (18.2 or higher)
 - [React Router](https://github.com/ReactTraining/react-router)
 - [Scss](http://sass-lang.com/)
+- [RxJS](https://rxjs.dev/)
 - [Redux](http://redux.js.org/)
+- [Redux Toolkit](https://redux-toolkit.js.org/)
 
 ## Available Scripts
 
