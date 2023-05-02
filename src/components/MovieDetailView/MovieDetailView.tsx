@@ -23,7 +23,7 @@ export const MovieDetailView: FC<IMovieDetailViewProps> = ({movie}) => {
     <div className={styles.movie_detail}>
       <div className={clsx('container', styles.container)}>
         <button type="button" className={styles.return_button} onClick={navigateToHomePage}>
-          Home
+          &#8592; Go To Home Page
         </button>
 
         <div className={styles.movie_detail_item}>
@@ -31,11 +31,21 @@ export const MovieDetailView: FC<IMovieDetailViewProps> = ({movie}) => {
             <img src={movie.img} alt={movie.name} />
           </div>
           <div className={styles.movie_detail_item__content}>
-            <p><b>Name:</b> {movie.name}</p>
-            <p><b>Rate:</b> {movie.rate}</p>
-            <p><b>Length:</b> {movie.length}</p>
-            <p><b>Genres:</b> {movie.genres.join(', ')}</p>
-            <p><b>Description:</b> {movie.description}</p>
+            <p>
+              <b>Name:</b> {movie.name}
+            </p>
+            <p>
+              <b>Rate:</b> {movie.rate}
+            </p>
+            <p>
+              <b>Length:</b> {movie.length}
+            </p>
+            <p>
+              <b>Genres:</b> {movie.genres.join(', ')}
+            </p>
+            <p>
+              <b>Description:</b> {movie.description}
+            </p>
           </div>
         </div>
       </div>
