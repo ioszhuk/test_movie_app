@@ -1,17 +1,28 @@
-import React from 'react';
-import './App.scss';
+import React, {lazy, Suspense} from 'react';
+import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {LoadingBoundary} from '../LoadingBoundary/LoadingBoundary';
+import {Header} from '../Header/Header';
+import {Footer} from '../Footer/Footer';
+import {ErrorBoundary} from '../ErrorBoundary/ErrorBoundary';
+
+const HomePage = lazy(() => import('../../pages/HomePage'));
+const MovieDetailPage = lazy(() => import('../../pages/MovieDetailPage'));
+const NotFoundPage = lazy(() => import('../../pages/NotFoundPage'));
 
 export const App = () => {
-  const people: string[] = ['Kirill', 'Ruslan', 'Book', 'Sammy', 'Billy', 'Fill', 'Bob2'];
-
   return (
-    <div>
-      <h2 className="hello">Hello23</h2>
-      <ul>
-        {people.map((person, index) => {
-          return <li key={index}>{person}</li>;
-        })}
-      </ul>
-    </div>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <Suspense fallback={<LoadingBoundary />}>
+          <Header />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/:slug" element={<MovieDetailPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+          <Footer />
+        </Suspense>
+      </BrowserRouter>
+    </ErrorBoundary>
   );
 };

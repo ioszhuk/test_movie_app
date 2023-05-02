@@ -1,0 +1,54 @@
+@import "normalize";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+img, picture, svg, video {
+  display: block;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+a, button {
+  transition-duration: .3s;
+}
+
+body {
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: rgba(17, 24, 39, 1);
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  line-height: inherit;
+}
+
+.container {
+  width: 100%;
+  padding-left: 50px;
+  padding-right: 50px;
+  margin: 0 auto;
+  max-width: none;
+
+  @media (max-width: 1024px) {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  @media (max-width: 768px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  @media (max-width: 768px) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  @media (max-width: 576px) {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+}
