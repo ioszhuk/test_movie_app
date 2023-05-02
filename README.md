@@ -2,6 +2,23 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+### Application contains the below features
+
+- **Movies List**
+  - List Movies
+  - Search
+  - Clicking on a particular movie will redirect you to the selected &#39;Movie detail&#39; page
+- **Movie detail**
+  - Show selected movie detail information
+  - Navigate back to &#39;Movie list&#39;
+
+#### Technologies
+
+- [ReactJS](https://reactjs.org/) (16.9 or higher)
+- [React Router](https://github.com/ReactTraining/react-router)
+- [Scss](http://sass-lang.com/)
+- [Redux](http://redux.js.org/)
+
 ## Available Scripts
 
 In the project directory, you can run:
