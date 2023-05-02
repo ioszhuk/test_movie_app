@@ -6,7 +6,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 - **Movies List**
   - List Movies
-  - Search
+  - Movie Search
+  - Movie Sort
+  - Movie Genre Filter
 - **Movie detail**
   - Show selected movie detail information
   - Navigate back to &#39;Movie list&#39;
@@ -44,10 +46,10 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
-### `npm lint`
+### `npm run lint`
 
 Runs code quality test with ESLint check.
 
-### `npm lint:fix`
+### `npm run lint:fix`
 
 Runs code quality test with ESLint check + autofix issues.
