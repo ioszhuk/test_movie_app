@@ -1,13 +1,15 @@
 import {FC, useEffect} from 'react';
 import {initTE, Select} from 'tw-elements';
-import styles from './MovieFilter.module.scss';
 import {IGenre} from '../../models/IGenre';
+import styles from './MovieFilter.module.scss';
 
 interface IFilterSelectList {
   genres: IGenre[];
+  activeItems: string[];
+  changeActiveItems: any;
 }
 
-export const MovieGenreFilter: FC<IFilterSelectList> = ({genres}) => {
+export const MovieGenreFilter: FC<IFilterSelectList> = ({genres, activeItems, changeActiveItems}) => {
   useEffect(() => {
     initTE({Select});
   }, []);
@@ -16,16 +18,25 @@ export const MovieGenreFilter: FC<IFilterSelectList> = ({genres}) => {
     return null;
   }
 
+  function onChangeSelect(targetId: string): void {
+    const selectElement = document.querySelector(`#${targetId}`);
+    const selectInstance = Select.getInstance(selectElement);
+    changeActiveItems(selectInstance.value);
+  }
+
   return (
     <div className={styles.filter}>
       <select
         data-te-select-init=""
         data-te-select-all={false}
         multiple
+        id="js-movie-genre-filter"
         data-te-select-displayed-labels="1"
         data-te-select-options-selected-label="selected"
+        onChange={(e) => onChangeSelect(e.target.id)}
+        value={activeItems}
       >
-        {genres.map((genre) => (
+        {genres.map((genre: IGenre) => (
           <option key={genre.id} value={genre.name}>
             {genre.name}
           </option>

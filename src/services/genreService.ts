@@ -7,7 +7,4 @@ export class GenreService {
     return this.api.getResource('/genres');
   }
 
-  getOne(id: string) {
-    return this.api.getResource(`/genres/${id}`);
-  }
 }

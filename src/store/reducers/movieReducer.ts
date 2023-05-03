@@ -1,10 +1,13 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../store';
 import {IMovie} from '../../models/IMovie';
+import {MovieSort} from '../../models/ISort';
 
 interface MovieState {
   movies: IMovie[];
   currentMovie: IMovie | null;
+  filter: string[];
+  sortOrder: string;
   isLoading: boolean;
   isError: boolean;
   error: string;
@@ -13,6 +16,8 @@ interface MovieState {
 const initialState: MovieState = {
   movies: [],
   currentMovie: null,
+  filter: [],
+  sortOrder: MovieSort.NAME,
   isLoading: false,
   isError: false,
   error: ''
@@ -37,6 +42,12 @@ const movieSlice = createSlice({
       state.error = '';
       state.currentMovie = action.payload;
     },
+    setMoviesFilter(state, action: PayloadAction<string[]>) {
+      state.filter = action.payload;
+    },
+    setMoviesSortOrder(state, action: PayloadAction<string>) {
+      state.sortOrder = action.payload;
+    },
     moviesFetchingError(state, action: PayloadAction<string>) {
       state.isLoading = false;
       state.isError = true;
@@ -45,13 +56,23 @@ const movieSlice = createSlice({
   }
 });
 
-export const {moviesFetchingRequest, moviesFetchingSuccess, currentMovieFetchingSuccess, moviesFetchingError} =
-  movieSlice.actions;
+export const {
+  moviesFetchingRequest,
+  moviesFetchingSuccess,
+  currentMovieFetchingSuccess,
+  setMoviesFilter,
+  setMoviesSortOrder,
+  moviesFetchingError
+} = movieSlice.actions;
 
 export const getMovieStateIsLoading = (state: RootState) => state.movies.isLoading;
-export const getMovieStateAllMovies = (state: RootState) => state.movies.movies;
-export const getMovieStateCurrentMovie = (state: RootState) => state.movies.currentMovie;
 export const getMovieStateIsError = (state: RootState) => state.movies.isError;
 export const getMovieStateError = (state: RootState) => state.movies.error;
+
+export const getMovieStateAllMovies = (state: RootState) => state.movies.movies;
+export const getMovieStateCurrentMovie = (state: RootState) => state.movies.currentMovie;
+
+export const getMovieStateFilter = (state: RootState) => state.movies.filter;
+export const getMovieStateSortOrder = (state: RootState) => state.movies.sortOrder;
 
 export const movieReducer = movieSlice.reducer;

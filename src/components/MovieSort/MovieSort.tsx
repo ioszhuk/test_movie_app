@@ -1,19 +1,31 @@
 import {FC, useEffect} from 'react';
-import {Select, initTE} from 'tw-elements';
+import {initTE, Select} from 'tw-elements';
 import styles from './MovieSort.module.scss';
+import {ISort} from '../../models/ISort';
 
-export const MovieSort: FC = () => {
+interface IMovieSort {
+  items: ISort[];
+  activeItem: string;
+  changeActiveItem: any;
+}
 
+export const MovieSort: FC<IMovieSort> = ({items, activeItem, changeActiveItem}) => {
   useEffect(() => {
     initTE({Select});
   }, []);
 
+  if (!items.length) {
+    return null;
+  }
+
   return (
     <div className={styles.sort}>
-      <select data-te-select-init="">
-        <option value="1">By Name</option>
-        <option value="2">By Rating</option>
-        <option value="3">By Length</option>
+      <select data-te-select-init="" value={activeItem} onChange={(e) => changeActiveItem(e.target.value)}>
+        {items.map((item: ISort) => (
+          <option key={item.id} value={item.id}>
+            {item.name}
+          </option>
+        ))}
       </select>
       <label data-te-select-label-ref="">Sort</label>
     </div>
