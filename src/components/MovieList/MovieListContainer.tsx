@@ -48,12 +48,8 @@ export const MovieListContainer = () => {
   }
 
   function getSortedMovies(): IMovie[] {
-    if (!filteredMovies.length) {
-      return movies;
-    }
 
     if (movieSortOrder === MovieSort.NAME) {
-
       return [...filteredMovies].sort(function (objectA, objectB) {
         if (objectA.name < objectB.name) {
           return -1;
@@ -65,9 +61,7 @@ export const MovieListContainer = () => {
 
         return 0;
       });
-
-    } else if(movieSortOrder === MovieSort.RATING) {
-
+    } else if (movieSortOrder === MovieSort.RATING) {
       return [...filteredMovies].sort(function (objectA, objectB) {
         if (objectA.rate < objectB.rate) {
           return 1;
@@ -79,7 +73,6 @@ export const MovieListContainer = () => {
 
         return 0;
       });
-
     }
 
     return filteredMovies;
