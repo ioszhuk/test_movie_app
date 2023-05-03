@@ -4,6 +4,7 @@ import {IMovie} from '../../models/IMovie';
 
 interface MovieState {
   movies: IMovie[];
+  currentMovie: IMovie | null;
   isLoading: boolean;
   isError: boolean;
   error: string;
@@ -11,6 +12,7 @@ interface MovieState {
 
 const initialState: MovieState = {
   movies: [],
+  currentMovie: null,
   isLoading: false,
   isError: false,
   error: ''
@@ -29,6 +31,12 @@ const movieSlice = createSlice({
       state.error = '';
       state.movies = action.payload;
     },
+    currentMovieFetchingSuccess(state, action: PayloadAction<IMovie>) {
+      state.isLoading = false;
+      state.isError = false;
+      state.error = '';
+      state.currentMovie = action.payload;
+    },
     moviesFetchingError(state, action: PayloadAction<string>) {
       state.isLoading = false;
       state.isError = true;
@@ -37,10 +45,12 @@ const movieSlice = createSlice({
   }
 });
 
-export const {moviesFetchingRequest, moviesFetchingSuccess, moviesFetchingError} = movieSlice.actions;
+export const {moviesFetchingRequest, moviesFetchingSuccess, currentMovieFetchingSuccess, moviesFetchingError} =
+  movieSlice.actions;
 
 export const getMovieStateIsLoading = (state: RootState) => state.movies.isLoading;
 export const getMovieStateAllMovies = (state: RootState) => state.movies.movies;
+export const getMovieStateCurrentMovie = (state: RootState) => state.movies.currentMovie;
 export const getMovieStateIsError = (state: RootState) => state.movies.isError;
 export const getMovieStateError = (state: RootState) => state.movies.error;
 

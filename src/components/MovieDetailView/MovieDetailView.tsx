@@ -5,7 +5,7 @@ import {IMovie} from '../../models/IMovie';
 import styles from './MovieDetailView.module.scss';
 
 interface IMovieDetailViewProps {
-  movie: IMovie | any;
+  movie: IMovie;
 }
 
 export const MovieDetailView: FC<IMovieDetailViewProps> = ({movie}) => {

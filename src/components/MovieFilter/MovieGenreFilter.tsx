@@ -1,7 +1,7 @@
 import {FC, useEffect} from 'react';
+import {initTE, Select} from 'tw-elements';
 import styles from './MovieFilter.module.scss';
 import {IGenre} from '../../models/IGenre';
-import {initTE, Select} from 'tw-elements';
 
 interface IFilterSelectList {
   genres: IGenre[];
@@ -11,6 +11,10 @@ export const MovieGenreFilter: FC<IFilterSelectList> = ({genres}) => {
   useEffect(() => {
     initTE({Select});
   }, []);
+
+  if (!genres.length) {
+    return null;
+  }
 
   return (
     <div className={styles.filter}>
