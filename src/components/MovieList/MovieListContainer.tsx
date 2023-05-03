@@ -23,11 +23,11 @@ export const MovieListContainer = () => {
 
   const filteredMovies = useMemo(() => {
     return getFilteredMovies();
-  }, [movieFilter, movies, getFilteredMovies]);
+  }, [movieFilter, movies]);
 
   const sortMovies = useMemo(() => {
     return getSortedMovies();
-  }, [movieSortOrder, movieFilter, movies, getSortedMovies]);
+  }, [movieSortOrder, movieFilter, movies]);
 
   function getFilteredMovies(): IMovie[] {
     if (!movieFilter.length) {
