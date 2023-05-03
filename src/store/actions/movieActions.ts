@@ -12,9 +12,7 @@ export const fetchMovies = () => async (dispatch: AppDispatch) => {
       throw new Error('Could not fetch movies data');
     }
 
-    setTimeout(() => {
-      dispatch(moviesFetchingSuccess(response.data));
-    }, 500);
+    dispatch(moviesFetchingSuccess(response.data));
 
   } catch (e: any) {
     dispatch(moviesFetchingError(e.message));

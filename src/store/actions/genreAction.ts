@@ -12,9 +12,7 @@ export const fetchGenres = () => async (dispatch: AppDispatch) => {
       throw new Error('Could not fetch movies data');
     }
 
-    setTimeout(() => {
-      dispatch(genresFetchingSuccess(response.data));
-    }, 500);
+    dispatch(genresFetchingSuccess(response.data));
 
   } catch (e: any) {
     dispatch(genresFetchingError(e.message));
