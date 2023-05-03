@@ -1,8 +1,8 @@
 import {FC} from 'react';
-import styles from './Header.module.scss';
 import {clsx} from 'clsx';
 import {Link} from 'react-router-dom';
-import {MovieSearch} from '../MovieSearch/MovieSearch';
+import {MovieSearchContainer} from '../MovieSearch/MovieSearchContainer';
+import styles from './Header.module.scss';
 
 export const Header: FC = () => {
   return (
@@ -12,7 +12,7 @@ export const Header: FC = () => {
           <Link to={'/'}>MovieX</Link>
         </div>
         <div className={styles.search}>
-          <MovieSearch />
+          <MovieSearchContainer />
         </div>
       </div>
     </div>
