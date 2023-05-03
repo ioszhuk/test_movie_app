@@ -16,6 +16,14 @@ export const MovieSearchContainer = () => {
 
   const dispatch = useAppDispatch();
 
+  useEffect(() => {
+    if (searchValue.length !== 0 && movies.length === 0) {
+      dispatch(fetchMovies());
+    }
+
+    findMovies();
+  }, [searchValue]);
+
   function changeSearchValue(value: string): void {
     setSearchValue(value);
   }
@@ -42,14 +50,6 @@ export const MovieSearchContainer = () => {
       )
       .subscribe((items) => setSearchResult(items));
   }
-
-  useEffect(() => {
-    if (!!searchValue && movies.length === 0) {
-      dispatch(fetchMovies());
-    }
-
-    findMovies();
-  }, [searchValue]);
 
   return (
     <MovieSearch

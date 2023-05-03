@@ -22,6 +22,7 @@ export const MovieSearch: FC<MovieSearchProps> = ({searchValue, searchResult, ch
       type="text"
       value={searchValue}
       placeholder="Find a movie"
+      autoComplete="off"
       onChange={(e) => changeSearchValue(e.target.value)}
     />
     {!!searchValue && (
