@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-#### Application contains the below features
+### Application contains the below features
 
 - **Movies List**
   - List Movies
@@ -13,7 +13,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
   - Show selected movie detail information
   - Navigate back to &#39;Movie list&#39;
 
-#### Technologies
+### Technologies
 
 - [ReactJS](https://reactjs.org/)
 - [React Router](https://github.com/ReactTraining/react-router)
