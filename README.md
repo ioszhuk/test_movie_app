@@ -13,7 +13,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
   - Show selected movie detail information
   - Navigate back to &#39;Movie list&#39;
 
-### Technologies
+## Technologies
 
 - [ReactJS](https://reactjs.org/)
 - [React Router](https://github.com/ReactTraining/react-router)
