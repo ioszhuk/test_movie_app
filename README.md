@@ -22,6 +22,18 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - [Redux](http://redux.js.org/)
 - [Redux Toolkit](https://redux-toolkit.js.org/)
 
+## Docker Scripts
+
+In the project directory, you can run:
+
+### `make dev`
+
+Runs the app in the development mode in Docker container.
+
+### `make prod`
+
+Build and runs the app in the production mode in Docker container.
+
 ## Available Scripts
 
 In the project directory, you can run:
