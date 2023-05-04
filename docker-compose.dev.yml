@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+
+  webapp:
+    container_name: "dev_movie_app_cnt"
+    build:
+      context: .
+      dockerfile: "Dockerfile.dev"
+    volumes:
+      - ".:/application"
+      - "/application/node_modules"
+    ports:
+      - "3000:3000"

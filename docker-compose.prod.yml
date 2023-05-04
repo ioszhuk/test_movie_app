@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+
+  webapp:
+    container_name: "prod_movie_app_cnt"
+    build:
+      context: .
+      dockerfile: "Dockerfile.prod"
+    ports:
+      - "80:80"

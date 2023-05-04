@@ -1,0 +1,17 @@
+# build environment
+FROM node:18-alpine
+
+WORKDIR /application
+
+# REACT ENV VARIABLES (ONLY FOR DOCKER BUILD)
+ENV REACT_APP_API_BASE_URL="http://localhost:8080"
+
+COPY package*.json .
+
+RUN npm install --silent
+
+COPY . .
+
+EXPOSE 3000
+
+CMD ["npm", "run", "start"]
