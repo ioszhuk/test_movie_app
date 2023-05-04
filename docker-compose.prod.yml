@@ -3,7 +3,7 @@ version: '3.9'
 services:
 
   front_app:
-    container_name: "prod_movie_app_container"
+    container_name: "prod_movie_spa_app_container"
     build:
       context: .
       dockerfile: "Dockerfile.prod"
