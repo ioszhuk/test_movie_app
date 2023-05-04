@@ -36,7 +36,9 @@ Build and runs the app in the production mode in Docker container.
 
 ## Available Scripts
 
-In the project directory, you can run:
+Recommend version of Node.js: v18 (LTS).
+
+In the project directory, you can run also:
 
 ### `npm start`
 
