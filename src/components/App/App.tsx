@@ -10,6 +10,9 @@ const MovieDetailPage = lazy(() => import('../../pages/MovieDetailPage'));
 const NotFoundPage = lazy(() => import('../../pages/NotFoundPage'));
 
 export const App = () => {
+  console.log('ENV', process.env);
+  console.log('ENV_BASE', process.env.REACT_APP_API_BASE_URL);
+
   return (
     <ErrorBoundary>
       <BrowserRouter>
