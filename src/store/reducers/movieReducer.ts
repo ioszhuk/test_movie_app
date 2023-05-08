@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {IMovie} from '../../models/IMovie';
-import {MovieSort} from '../../models/ISort';
+import {MovieSort} from '../../enums/MovieSort';
 
 interface MovieState {
   movies: IMovie[];

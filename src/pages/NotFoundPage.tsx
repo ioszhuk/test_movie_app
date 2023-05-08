@@ -1,21 +1,8 @@
-import {useEffect, memo} from 'react';
-import {useNavigate} from 'react-router-dom';
+import React, {memo} from 'react';
+import {NotFound} from '../components/NotFound/NotFound';
 
 const NotFoundPage = memo(() => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    setTimeout(() => {
-      navigate('/');
-    }, 1400);
-  }, []);
-
-  return (
-    <div>
-      <h4>404</h4>
-      <h1>This page does not exist</h1>
-    </div>
-  );
+  return <NotFound message="Not found page" />;
 });
 
 export default NotFoundPage;

@@ -1,6 +1,6 @@
 import {useMemo} from 'react';
 import {IMovie} from '../models/IMovie';
-import {MovieSort} from '../models/ISort';
+import {MovieSort} from '../enums/MovieSort';
 
 const useMovieFilter = (movies: IMovie[], movieFilter: string[]): IMovie[] => {
   return useMemo(() => {

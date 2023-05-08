@@ -14,13 +14,17 @@ export const MovieSearchContainer = memo(() => {
   const [searchResults, setSearchResults] = useState<IMovie[]>([]);
 
   const searchMovies = async (query: string) => {
-    if (query.length) {
-      const movieService = new MovieService();
+    try {
+      if (query.length) {
+        const movieService = new MovieService();
 
-      const movies = await movieService.search(query);
+        const movies = await movieService.search(query);
 
-      setSearchResults(movies);
-    } else {
+        setSearchResults(movies);
+      } else {
+        setSearchResults([]);
+      }
+    } catch (e: any) {
       setSearchResults([]);
     }
   };
