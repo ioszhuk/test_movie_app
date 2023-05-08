@@ -4,14 +4,15 @@ import styles from './MovieSearch.module.scss';
 
 interface MovieSearchListProps {
   movies: IMovie[];
-  goToMovie(movie: IMovie): void;
+
+  navigateToMovie(movie: IMovie): void;
 }
 
-export const MovieSearchResult: FC<MovieSearchListProps> = memo(({movies, goToMovie}) => {
+export const MovieSearchResult: FC<MovieSearchListProps> = memo(({movies, navigateToMovie}) => {
   return (
     <ul className={styles.found_movie_list}>
       {movies.map((movie: IMovie) => (
-        <li key={movie.id} onClick={() => goToMovie(movie)}>
+        <li key={movie.id} onClick={() => navigateToMovie(movie)}>
           <figure>
             <img src={movie.img} alt={movie.name} />
           </figure>
