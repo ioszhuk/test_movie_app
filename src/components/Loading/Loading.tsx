@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {FC, memo} from 'react';
 import {Spinner} from '../Spinner/Spinner';
 import {ErrorIndicator} from '../ErrorIndicator/ErrorIndicator';
 import styles from './Loading.module.scss';
@@ -10,7 +10,7 @@ interface ILoadingProps {
   children: any;
 }
 
-export const Loading: FC<ILoadingProps> = ({isLoading, isError, error, children}) => {
+export const Loading: FC<ILoadingProps> = memo(({isLoading, isError, error, children}) => {
   if (isLoading) {
     return (
       <div className={styles.loading}>
@@ -28,4 +28,4 @@ export const Loading: FC<ILoadingProps> = ({isLoading, isError, error, children}
   }
 
   return children;
-};
+});

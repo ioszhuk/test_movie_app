@@ -1,62 +1,52 @@
-import {useEffect, useState} from 'react';
-import {from} from 'rxjs';
-import {filter, scan} from 'rxjs/operators';
-import {useAppDispatch, useAppSelector} from '../../hooks/redux';
-import {getMovieStateAllMovies} from '../../store/reducers/movieReducer';
+import {useState, memo} from 'react';
+import {useNavigate} from 'react-router-dom';
 import {IMovie} from '../../models/IMovie';
-import {fetchMovies} from '../../store/actions/movieActions';
-import {MovieSearch} from './MovieSearch';
+import {MovieSearchInput} from './MovieSearchInput';
+import styles from './MovieSearch.module.scss';
+import {MovieSearchResult} from './MovieSearchResult';
+import {MovieService} from '../../services/MovieService';
+import {useDebounce} from '../../hooks/useDebounce';
 
-export const MovieSearchContainer = () => {
-  const movies = useAppSelector(getMovieStateAllMovies);
+export const MovieSearchContainer = memo(() => {
+  const navigate = useNavigate();
 
-  const [searchValue, setSearchValue] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<IMovie[]>([]);
 
-  const [searchResult, setSearchResult] = useState<IMovie[]>([]);
+  const searchMovies = async (query: string) => {
+    try {
+      if (query.length) {
+        const movieService = new MovieService();
 
-  const dispatch = useAppDispatch();
+        const movies = await movieService.search(query);
 
-  useEffect(() => {
-    if (searchValue.length !== 0 && movies.length === 0) {
-      dispatch(fetchMovies());
+        setSearchResults(movies);
+      } else {
+        setSearchResults([]);
+      }
+    } catch (e: any) {
+      setSearchResults([]);
     }
+  };
 
-    findMovies();
-  }, [searchValue]);
+  const debouncedSearch = useDebounce(searchMovies, 300);
 
-  function changeSearchValue(value: string): void {
-    setSearchValue(value);
-  }
+  const changeSearchQuery = (value: string) => {
+    setSearchQuery(value);
+    debouncedSearch(value);
+  };
 
-  function clearSearchValue(): void {
-    setSearchValue('');
-  }
+  const clearSearchQuery = () => setSearchQuery('');
 
-  function findMovies(): void {
-    const source = from(movies);
-
-    const searchPhrase = searchValue.toLowerCase().trim();
-
-    // block searching if string shorter than 2 chars
-    if (searchPhrase.length < 2) {
-      setSearchResult([]);
-      return;
-    }
-
-    source
-      .pipe(
-        filter((movie: IMovie) => movie.name.toLowerCase().includes(searchPhrase)),
-        scan((acc: any, v: IMovie) => acc.concat(v), [])
-      )
-      .subscribe((items) => setSearchResult(items));
-  }
+  const goToMovie = (movie: IMovie) => {
+    clearSearchQuery();
+    navigate(`/${movie.slug}`);
+  };
 
   return (
-    <MovieSearch
-      searchValue={searchValue}
-      searchResult={searchResult}
-      changeSearchValue={changeSearchValue}
-      clearSearchValue={clearSearchValue}
-    />
+    <div className={styles.search}>
+      <MovieSearchInput value={searchQuery} onChange={changeSearchQuery} onReset={clearSearchQuery} />
+      {!!searchResults.length && <MovieSearchResult movies={searchResults} goToMovie={goToMovie} />}
+    </div>
   );
-};
+});

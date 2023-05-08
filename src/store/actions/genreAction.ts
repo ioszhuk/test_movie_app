@@ -1,7 +1,6 @@
-import axios from 'axios';
 import {AppDispatch} from '../store';
 import {genresFetchingRequest, genresFetchingSuccess, genresFetchingError} from '../reducers/genreReducer';
-import {GenreService} from '../../services/genreService';
+import {GenreService} from '../../services/GenreService';
 
 export const fetchGenres = () => async (dispatch: AppDispatch) => {
   try {
@@ -9,14 +8,10 @@ export const fetchGenres = () => async (dispatch: AppDispatch) => {
 
     const genreService = new GenreService();
 
-    const response = await genreService.getAll();
+    const genres = await genreService.getAll();
 
-    if (response.status !== axios.HttpStatusCode.Ok) {
-      throw new Error('Could not fetch genres data');
-    }
-
-    dispatch(genresFetchingSuccess(response.data));
+    dispatch(genresFetchingSuccess(genres));
   } catch (e: any) {
-    dispatch(genresFetchingError(e.message));
+    dispatch(genresFetchingError('Could not fetch genres data'));
   }
 };

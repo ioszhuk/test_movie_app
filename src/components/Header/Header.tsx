@@ -1,10 +1,10 @@
-import {FC} from 'react';
+import {FC, memo} from 'react';
 import {clsx} from 'clsx';
 import {Link} from 'react-router-dom';
 import {MovieSearchContainer} from '../MovieSearch/MovieSearchContainer';
 import styles from './Header.module.scss';
 
-export const Header: FC = () => {
+export const Header: FC = memo(() => {
   return (
     <div className={styles.header}>
       <div className={clsx('container', styles.container)}>
@@ -17,4 +17,4 @@ export const Header: FC = () => {
       </div>
     </div>
   );
-};
+});

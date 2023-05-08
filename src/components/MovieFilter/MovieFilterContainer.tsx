@@ -1,17 +1,18 @@
-import {FC, useEffect} from 'react';
+import {FC, useEffect, memo} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux';
-import * as genreState from '../../store/reducers/genreReducer';
+import * as genreSelector from '../../store/selectors/genreSelector';
+import * as movieSelector from '../../store/selectors/movieSelector';
 import {fetchGenres} from '../../store/actions/genreAction';
 import {Loading} from '../Loading/Loading';
-import {MovieGenreFilter} from './MovieGenreFilter';
-import {getMovieStateFilter, setMoviesFilter} from '../../store/reducers/movieReducer';
+import {MovieFilter} from './MovieFilter';
+import {setMoviesFilter} from '../../store/reducers/movieReducer';
 
-export const MovieFilterContainer: FC = () => {
-  const isLoading = useAppSelector(genreState.getGenreStateIsLoading);
-  const genres = useAppSelector(genreState.getGenreStateAllGenres);
-  const activeFilterItems = useAppSelector(getMovieStateFilter);
-  const isError = useAppSelector(genreState.getGenreStateIsError);
-  const error = useAppSelector(genreState.getGenreStateError);
+export const MovieFilterContainer: FC = memo(() => {
+  const isLoading = useAppSelector(genreSelector.getGenreStateIsLoading);
+  const genres = useAppSelector(genreSelector.getGenreStateAllGenres);
+  const activeFilterItems = useAppSelector(movieSelector.getMovieStateFilter);
+  const isError = useAppSelector(genreSelector.getGenreStateIsError);
+  const error = useAppSelector(genreSelector.getGenreStateError);
 
   const dispatch = useAppDispatch();
 
@@ -25,7 +26,7 @@ export const MovieFilterContainer: FC = () => {
 
   return (
     <Loading isLoading={isLoading} isError={isError} error={error}>
-      <MovieGenreFilter genres={genres} activeItems={activeFilterItems} changeActiveItems={changeActiveItems} />
+      <MovieFilter genres={genres} activeItems={activeFilterItems} changeActiveItems={changeActiveItems} />
     </Loading>
   );
-};
+});

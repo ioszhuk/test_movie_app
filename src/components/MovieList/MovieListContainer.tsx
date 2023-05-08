@@ -1,19 +1,18 @@
-import {useEffect, useMemo} from 'react';
+import {useEffect, memo} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks/redux';
-import * as movieState from '../../store/reducers/movieReducer';
+import * as movieSelector from '../../store/selectors/movieSelector';
 import {fetchMovies} from '../../store/actions/movieActions';
 import {Loading} from '../Loading/Loading';
 import {MovieList} from './MovieList';
-import {IMovie} from '../../models/IMovie';
-import {MovieSort} from '../../models/ISort';
+import {useMovies} from '../../hooks/useMovies';
 
-export const MovieListContainer = () => {
-  const isLoading = useAppSelector(movieState.getMovieStateIsLoading);
-  const movies = useAppSelector(movieState.getMovieStateAllMovies);
-  const movieFilter = useAppSelector(movieState.getMovieStateFilter);
-  const movieSortOrder = useAppSelector(movieState.getMovieStateSortOrder);
-  const isError = useAppSelector(movieState.getMovieStateIsError);
-  const error = useAppSelector(movieState.getMovieStateError);
+export const MovieListContainer = memo((props) => {
+  const isLoading = useAppSelector(movieSelector.getMovieStateIsLoading);
+  const movies = useAppSelector(movieSelector.getMovieStateAllMovies);
+  const movieFilter = useAppSelector(movieSelector.getMovieStateFilter);
+  const movieSortOrder = useAppSelector(movieSelector.getMovieStateSortOrder);
+  const isError = useAppSelector(movieSelector.getMovieStateIsError);
+  const error = useAppSelector(movieSelector.getMovieStateError);
 
   const dispatch = useAppDispatch();
 
@@ -21,66 +20,11 @@ export const MovieListContainer = () => {
     dispatch(fetchMovies());
   }, [dispatch]);
 
-  const filteredMovies = useMemo(() => {
-    return getFilteredMovies();
-  }, [movieFilter, movies]);
-
-  const sortMovies = useMemo(() => {
-    return getSortedMovies();
-  }, [movieSortOrder, movieFilter, movies]);
-
-  function getFilteredMovies(): IMovie[] {
-    if (!movieFilter.length) {
-      return movies;
-    }
-
-    return movies.filter((movie) => {
-      let isMovieHasGenre: boolean = false;
-
-      movie.genres.forEach((genre) => {
-        if (movieFilter.includes(genre)) {
-          isMovieHasGenre = true;
-        }
-      });
-
-      return isMovieHasGenre;
-    });
-  }
-
-  function getSortedMovies(): IMovie[] {
-
-    if (movieSortOrder === MovieSort.NAME) {
-      return [...filteredMovies].sort(function (objectA, objectB) {
-        if (objectA.name < objectB.name) {
-          return -1;
-        }
-
-        if (objectA.name > objectB.name) {
-          return 1;
-        }
-
-        return 0;
-      });
-    } else if (movieSortOrder === MovieSort.RATING) {
-      return [...filteredMovies].sort(function (objectA, objectB) {
-        if (objectA.rate < objectB.rate) {
-          return 1;
-        }
-
-        if (objectA.rate > objectB.rate) {
-          return -1;
-        }
-
-        return 0;
-      });
-    }
-
-    return filteredMovies;
-  }
+  const filteredAndSortedMovies = useMovies(movies, movieFilter, movieSortOrder);
 
   return (
     <Loading isLoading={isLoading} isError={isError} error={error}>
-      <MovieList movies={sortMovies} />
+      <MovieList movies={filteredAndSortedMovies} />
     </Loading>
   );
-};
+});

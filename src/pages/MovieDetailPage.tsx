@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {memo, useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../hooks/redux';
-import * as movieState from '../store/reducers/movieReducer';
+import * as movieSelector from '../store/selectors/movieSelector';
 import {MovieDetailView} from '../components/MovieDetailView/MovieDetailView';
 import {fetchMovie} from '../store/actions/movieActions';
 import {Loading} from '../components/Loading/Loading';
@@ -11,11 +11,11 @@ type ParamsType = {
   slug: string;
 };
 
-export default function MovieDetailPage() {
-  const isLoading = useAppSelector(movieState.getMovieStateIsLoading);
-  const currentMovie = useAppSelector(movieState.getMovieStateCurrentMovie);
-  const isError = useAppSelector(movieState.getMovieStateIsError);
-  const error = useAppSelector(movieState.getMovieStateError);
+const MovieDetailPage = memo(() => {
+  const isLoading = useAppSelector(movieSelector.getMovieStateIsLoading);
+  const currentMovie = useAppSelector(movieSelector.getMovieStateCurrentMovie);
+  const isError = useAppSelector(movieSelector.getMovieStateIsError);
+  const error = useAppSelector(movieSelector.getMovieStateError);
 
   const dispatch = useAppDispatch();
 
@@ -31,4 +31,6 @@ export default function MovieDetailPage() {
       {currentMovie ? <MovieDetailView movie={currentMovie} /> : <NotFound message="Not found movie" />}
     </Loading>
   );
-}
+});
+
+export default MovieDetailPage;

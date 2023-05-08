@@ -1,11 +1,10 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {RootState} from '../store';
 import {IMovie} from '../../models/IMovie';
-import {MovieSort} from '../../models/ISort';
+import {MovieSort} from '../../enums/MovieSort';
 
 interface MovieState {
   movies: IMovie[];
-  currentMovie: IMovie | null;
+  currentMovie: IMovie | undefined;
   filter: string[];
   sortOrder: string;
   isLoading: boolean;
@@ -15,7 +14,7 @@ interface MovieState {
 
 const initialState: MovieState = {
   movies: [],
-  currentMovie: null,
+  currentMovie: undefined,
   filter: [],
   sortOrder: MovieSort.NAME,
   isLoading: false,
@@ -64,15 +63,5 @@ export const {
   setMoviesSortOrder,
   moviesFetchingError
 } = movieSlice.actions;
-
-export const getMovieStateIsLoading = (state: RootState) => state.movies.isLoading;
-export const getMovieStateIsError = (state: RootState) => state.movies.isError;
-export const getMovieStateError = (state: RootState) => state.movies.error;
-
-export const getMovieStateAllMovies = (state: RootState) => state.movies.movies;
-export const getMovieStateCurrentMovie = (state: RootState) => state.movies.currentMovie;
-
-export const getMovieStateFilter = (state: RootState) => state.movies.filter;
-export const getMovieStateSortOrder = (state: RootState) => state.movies.sortOrder;
 
 export const movieReducer = movieSlice.reducer;

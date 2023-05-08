@@ -1,15 +1,10 @@
-import {FC, useEffect} from 'react';
+import {FC, useEffect, memo} from 'react';
 import {initTE, Select} from 'tw-elements';
 import styles from './MovieSort.module.scss';
 import {ISort} from '../../models/ISort';
+import {IMovieSort} from '../../models/IMovieSort';
 
-interface IMovieSort {
-  items: ISort[];
-  activeItem: string;
-  changeActiveItem: any;
-}
-
-export const MovieSort: FC<IMovieSort> = ({items, activeItem, changeActiveItem}) => {
+export const MovieSort: FC<IMovieSort> = memo(({items, activeItem, onChange}) => {
   useEffect(() => {
     initTE({Select});
   }, []);
@@ -20,7 +15,7 @@ export const MovieSort: FC<IMovieSort> = ({items, activeItem, changeActiveItem})
 
   return (
     <div className={styles.sort}>
-      <select data-te-select-init="" value={activeItem} onChange={(e) => changeActiveItem(e.target.value)}>
+      <select data-te-select-init="" value={activeItem} onChange={(e) => onChange(e.target.value)}>
         {items.map((item: ISort) => (
           <option key={item.id} value={item.id}>
             {item.name}
@@ -30,4 +25,4 @@ export const MovieSort: FC<IMovieSort> = ({items, activeItem, changeActiveItem})
       <label data-te-select-label-ref="">Sort</label>
     </div>
   );
-};
+});

@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {FC, memo} from 'react';
 import {clsx} from 'clsx';
 import {IMovie} from '../../models/IMovie';
 import {MovieListItem} from '../MovieListItem/MovieListItem';
@@ -8,7 +8,7 @@ interface MovieListProps {
   movies: IMovie[];
 }
 
-export const MovieList: FC<MovieListProps> = ({movies}) => {
+export const MovieList: FC<MovieListProps> = memo(({movies}) => {
   return (
     <div className={styles.list}>
       <div className={clsx('container', styles.container)}>
@@ -20,4 +20,4 @@ export const MovieList: FC<MovieListProps> = ({movies}) => {
       </div>
     </div>
   );
-};
+});
