@@ -4,7 +4,7 @@ import styles from './MovieSearch.module.scss';
 
 interface MovieSearchListProps {
   movies: IMovie[];
-  goToMovie: any;
+  goToMovie(movie: IMovie): void;
 }
 
 export const MovieSearchResult: FC<MovieSearchListProps> = memo(({movies, goToMovie}) => {
