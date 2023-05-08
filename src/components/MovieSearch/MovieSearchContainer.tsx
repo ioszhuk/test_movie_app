@@ -1,62 +1,54 @@
-import {useEffect, useState} from 'react';
-import {from} from 'rxjs';
-import {filter, scan} from 'rxjs/operators';
-import {useAppDispatch, useAppSelector} from '../../hooks/redux';
-import {getMovieStateAllMovies} from '../../store/reducers/movieReducer';
+import {useEffect, useState, memo} from 'react';
 import {IMovie} from '../../models/IMovie';
-import {fetchMovies} from '../../store/actions/movieActions';
-import {MovieSearch} from './MovieSearch';
+import {MovieSearchInput} from './MovieSearchInput';
+import styles from './MovieSearch.module.scss';
+import {MovieSearchResult} from './MovieSearchResult';
+import {useNavigate} from 'react-router-dom';
+import {MovieService} from '../../services/MovieService';
 
-export const MovieSearchContainer = () => {
-  const movies = useAppSelector(getMovieStateAllMovies);
+export const MovieSearchContainer = memo(() => {
+  const navigate = useNavigate();
 
   const [searchValue, setSearchValue] = useState<string>('');
 
   const [searchResult, setSearchResult] = useState<IMovie[]>([]);
 
-  const dispatch = useAppDispatch();
+  const searchMovie = async (value: string) => {
+
+    if (value.length) {
+      const movieService = new MovieService();
+
+      const movies = await movieService.search(value);
+
+      setSearchResult(movies);
+
+    } else {
+      setSearchResult([]);
+    }
+
+  };
 
   useEffect(() => {
-    if (searchValue.length !== 0 && movies.length === 0) {
-      dispatch(fetchMovies());
-    }
-
-    findMovies();
+    searchMovie(searchValue);
   }, [searchValue]);
 
-  function changeSearchValue(value: string): void {
-    setSearchValue(value);
-  }
+  const changeSearchValue = (value: string) => setSearchValue(value);
 
-  function clearSearchValue(): void {
-    setSearchValue('');
-  }
+  const clearSearchValue = () => setSearchValue('');
 
-  function findMovies(): void {
-    const source = from(movies);
-
-    const searchPhrase = searchValue.toLowerCase().trim();
-
-    // block searching if string shorter than 2 chars
-    if (searchPhrase.length < 2) {
-      setSearchResult([]);
-      return;
-    }
-
-    source
-      .pipe(
-        filter((movie: IMovie) => movie.name.toLowerCase().includes(searchPhrase)),
-        scan((acc: any, v: IMovie) => acc.concat(v), [])
-      )
-      .subscribe((items) => setSearchResult(items));
-  }
+  const goToMovie = (movie: IMovie) => {
+    clearSearchValue();
+    navigate(`/${movie.slug}`);
+  };
 
   return (
-    <MovieSearch
-      searchValue={searchValue}
-      searchResult={searchResult}
-      changeSearchValue={changeSearchValue}
-      clearSearchValue={clearSearchValue}
-    />
+    <div className={styles.search}>
+      <MovieSearchInput
+        searchValue={searchValue}
+        changeSearchValue={changeSearchValue}
+        clearSearchValue={clearSearchValue}
+      />
+      {!!searchResult.length && <MovieSearchResult movies={searchResult} goToMovie={goToMovie} />}
+    </div>
   );
-};
+});

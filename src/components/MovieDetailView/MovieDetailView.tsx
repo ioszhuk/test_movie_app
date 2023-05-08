@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {FC, memo} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {clsx} from 'clsx';
 import {IMovie} from '../../models/IMovie';
@@ -8,10 +8,10 @@ interface IMovieDetailViewProps {
   movie: IMovie;
 }
 
-export const MovieDetailView: FC<IMovieDetailViewProps> = ({movie}) => {
+export const MovieDetailView: FC<IMovieDetailViewProps> = memo(({movie}) => {
   const navigate = useNavigate();
 
-  function navigateToHomePage() {
+  function goHome() {
     navigate('/');
   }
 
@@ -22,7 +22,7 @@ export const MovieDetailView: FC<IMovieDetailViewProps> = ({movie}) => {
   return (
     <div className={styles.movie_detail}>
       <div className={clsx('container', styles.container)}>
-        <button type="button" className={styles.return_button} onClick={navigateToHomePage}>
+        <button type="button" className={styles.return_button} onClick={goHome}>
           &#8592; Go To Home Page
         </button>
 
@@ -51,4 +51,4 @@ export const MovieDetailView: FC<IMovieDetailViewProps> = ({movie}) => {
       </div>
     </div>
   );
-};
+});

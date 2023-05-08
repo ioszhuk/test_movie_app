@@ -1,13 +1,13 @@
-import {useEffect} from 'react';
+import {useEffect, memo} from 'react';
 import {useNavigate} from 'react-router-dom';
 
-export default function NotFoundPage() {
+const NotFoundPage = memo(() => {
   const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(() => {
       navigate('/');
-    }, 1500);
+    }, 1400);
   }, []);
 
   return (
@@ -16,4 +16,6 @@ export default function NotFoundPage() {
       <h1>This page does not exist</h1>
     </div>
   );
-}
+});
+
+export default NotFoundPage;

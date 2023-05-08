@@ -1,7 +1,8 @@
-import styles from './Footer.module.scss';
+import {memo} from 'react';
 import {clsx} from 'clsx';
+import styles from './Footer.module.scss';
 
-export const Footer = () => {
+export const Footer = memo(() => {
   return (
     <div className={styles.footer}>
       <div className={clsx('container', styles.container)}>
@@ -9,4 +10,4 @@ export const Footer = () => {
       </div>
     </div>
   );
-};
+});

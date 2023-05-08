@@ -1,5 +1,4 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {RootState} from '../store';
 import {IGenre} from '../../models/IGenre';
 
 interface GenreState {
@@ -38,11 +37,5 @@ const genreSlice = createSlice({
 });
 
 export const {genresFetchingRequest, genresFetchingSuccess, genresFetchingError} = genreSlice.actions;
-
-export const getGenreStateIsLoading = (state: RootState) => state.genres.isLoading;
-export const getGenreStateIsError = (state: RootState) => state.genres.isError;
-export const getGenreStateError = (state: RootState) => state.genres.error;
-
-export const getGenreStateAllGenres = (state: RootState) => state.genres.genres;
 
 export const genreReducer = genreSlice.reducer;

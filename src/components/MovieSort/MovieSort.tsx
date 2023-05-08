@@ -1,4 +1,4 @@
-import {FC, useEffect} from 'react';
+import {FC, useEffect, memo} from 'react';
 import {initTE, Select} from 'tw-elements';
 import styles from './MovieSort.module.scss';
 import {ISort} from '../../models/ISort';
@@ -9,7 +9,7 @@ interface IMovieSort {
   changeActiveItem: any;
 }
 
-export const MovieSort: FC<IMovieSort> = ({items, activeItem, changeActiveItem}) => {
+export const MovieSort: FC<IMovieSort> = memo(({items, activeItem, changeActiveItem}) => {
   useEffect(() => {
     initTE({Select});
   }, []);
@@ -30,4 +30,4 @@ export const MovieSort: FC<IMovieSort> = ({items, activeItem, changeActiveItem})
       <label data-te-select-label-ref="">Sort</label>
     </div>
   );
-};
+});
