@@ -36,17 +36,20 @@ export const MovieSearchContainer = memo(() => {
     debouncedSearch(value);
   };
 
-  const clearSearchQuery = () => setSearchQuery('');
+  const onReset = () => {
+    setSearchQuery('');
+    setSearchResults([]);
+  };
 
-  const goToMovie = (movie: IMovie) => {
-    clearSearchQuery();
+  const navigateToMovie = (movie: IMovie) => {
+    onReset();
     navigate(`/${movie.slug}`);
   };
 
   return (
     <div className={styles.search}>
-      <MovieSearchInput value={searchQuery} onChange={changeSearchQuery} onReset={clearSearchQuery} />
-      {!!searchResults.length && <MovieSearchResult movies={searchResults} goToMovie={goToMovie} />}
+      <MovieSearchInput value={searchQuery} onChange={changeSearchQuery} onReset={onReset} />
+      {!!searchResults.length && <MovieSearchResult movies={searchResults} navigateToMovie={navigateToMovie} />}
     </div>
   );
 });

@@ -1,6 +1,7 @@
 {
   "name": "moviex",
   "version": "1.0.0",
+  "author": "ioszhuk@gmail.com",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
