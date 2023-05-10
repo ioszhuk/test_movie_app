@@ -3,16 +3,14 @@ import {useNavigate} from 'react-router-dom';
 import {clsx} from 'clsx';
 import styles from './NotFound.module.scss';
 
-interface INotFound {
+interface INotFoundProps {
   message: string;
 }
 
-export const NotFound: FC<INotFound> = memo(({message}) => {
+export const NotFound: FC<INotFoundProps> = memo(({message}) => {
   const navigate = useNavigate();
 
-  function goHome() {
-    navigate('/');
-  }
+  const goHome = () => navigate('/');
 
   return (
     <div className={styles.not_found}>

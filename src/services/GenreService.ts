@@ -1,15 +1,11 @@
 import {ApiService} from './ApiService';
-import {IGenre} from '../models/IGenre';
+import {IGenre} from '../types/IGenre';
 
 export class GenreService {
-  private apiService;
+  private static API: ApiService = new ApiService();
 
-  constructor() {
-    this.apiService = new ApiService();
-  }
-
-  async getAll() {
-    const response = await this.apiService.getResource<IGenre[]>('/genres');
+  public static async getAll(): Promise<IGenre[]> {
+    const response = await GenreService.API.getResource<IGenre[]>('/genres');
     return response.data;
   }
 }

@@ -1,8 +1,8 @@
-import React, {memo} from 'react';
+import React from 'react';
 import {NotFound} from '../components/NotFound/NotFound';
 
-const NotFoundPage = memo(() => {
+const NotFoundPage = () => {
   return <NotFound message="Not found page" />;
-});
+};
 
 export default NotFoundPage;

@@ -1,14 +1,15 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {IGenre} from '../../models/IGenre';
+import {IGenre} from '../../types/IGenre';
+import {fetchGenres} from '../actionCreators/genreActionCreator';
 
-interface GenreState {
+interface IGenreState {
   genres: IGenre[];
   isLoading: boolean;
   isError: boolean;
   error: string;
 }
 
-const initialState: GenreState = {
+const initialState: IGenreState = {
   genres: [],
   isLoading: false,
   isError: false,
@@ -16,26 +17,25 @@ const initialState: GenreState = {
 };
 
 const genreSlice = createSlice({
-  name: 'genre',
+  name: 'genres',
   initialState,
-  reducers: {
-    genresFetchingRequest(state) {
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchGenres.pending.type, (state) => {
       state.isLoading = true;
-    },
-    genresFetchingSuccess(state, action: PayloadAction<IGenre[]>) {
+    });
+
+    builder.addCase(fetchGenres.fulfilled.type, (state, action: PayloadAction<IGenre[]>) => {
       state.isLoading = false;
-      state.isError = false;
-      state.error = '';
       state.genres = action.payload;
-    },
-    genresFetchingError(state, action: PayloadAction<string>) {
+    });
+
+    builder.addCase(fetchGenres.rejected.type, (state, action: PayloadAction<string>) => {
       state.isLoading = false;
       state.isError = true;
       state.error = action.payload;
-    }
+    });
   }
 });
-
-export const {genresFetchingRequest, genresFetchingSuccess, genresFetchingError} = genreSlice.actions;
 
 export const genreReducer = genreSlice.reducer;

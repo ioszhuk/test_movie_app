@@ -12,16 +12,16 @@ jobs:
       matrix:
         node-version: [ 18.x ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actionCreators/checkout@v3
       - name: Start Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+        uses: actionCreators/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
       - name: install modules
-        run: npm install
+        run: npm ci --silent
       - name: build project
         run: npm run build
       - name: run unit tests
         run: npm run test
-      - name: npm lint code
+      - name: lint code
         run: npm run lint

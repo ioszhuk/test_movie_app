@@ -1,13 +1,13 @@
-import {useState, memo} from 'react';
+import {FC, useState, memo} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {IMovie} from '../../models/IMovie';
+import {IMovie} from '../../types/IMovie';
 import {MovieSearchInput} from './MovieSearchInput';
 import styles from './MovieSearch.module.scss';
 import {MovieSearchResult} from './MovieSearchResult';
 import {MovieService} from '../../services/MovieService';
 import {useDebounce} from '../../hooks/useDebounce';
 
-export const MovieSearchContainer = memo(() => {
+export const MovieSearchContainer: FC = memo(() => {
   const navigate = useNavigate();
 
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -15,17 +15,15 @@ export const MovieSearchContainer = memo(() => {
 
   const searchMovies = async (query: string) => {
     try {
-      if (query.length) {
-        const movieService = new MovieService();
-
-        const movies = await movieService.search(query);
-
-        setSearchResults(movies);
-      } else {
-        setSearchResults([]);
-      }
+      // if (query.length) {
+      //   const movies = await MovieService.searchByName(query);
+      //
+      //   setSearchResults(movies);
+      // } else {
+      //   setSearchResults([]);
+      // }
     } catch (e: any) {
-      setSearchResults([]);
+      //setSearchResults([]);
     }
   };
 
@@ -36,20 +34,20 @@ export const MovieSearchContainer = memo(() => {
     debouncedSearch(value);
   };
 
-  const onReset = () => {
+  const resetSearchQueryAndSearchResult = () => {
     setSearchQuery('');
     setSearchResults([]);
   };
 
-  const navigateToMovie = (movie: IMovie) => {
-    onReset();
+  const goToMovie = (movie: IMovie) => {
+    resetSearchQueryAndSearchResult();
     navigate(`/${movie.slug}`);
   };
 
   return (
     <div className={styles.search}>
-      <MovieSearchInput value={searchQuery} onChange={changeSearchQuery} onReset={onReset} />
-      {!!searchResults.length && <MovieSearchResult movies={searchResults} navigateToMovie={navigateToMovie} />}
+      <MovieSearchInput value={searchQuery} onChange={changeSearchQuery} onReset={resetSearchQueryAndSearchResult} />
+      {!!searchResults.length && <MovieSearchResult movies={searchResults} goToMovie={goToMovie} />}
     </div>
   );
 });

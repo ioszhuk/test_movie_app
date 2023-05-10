@@ -1,7 +1,7 @@
 import {FC, memo} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {clsx} from 'clsx';
-import {IMovie} from '../../models/IMovie';
+import {IMovie} from '../../types/IMovie';
 import styles from './MovieDetailView.module.scss';
 
 interface IMovieDetailViewProps {
@@ -11,9 +11,7 @@ interface IMovieDetailViewProps {
 export const MovieDetailView: FC<IMovieDetailViewProps> = memo(({movie}) => {
   const navigate = useNavigate();
 
-  function goHome() {
-    navigate('/');
-  }
+  const goHome = () => navigate('/');
 
   if (!movie) {
     return null;

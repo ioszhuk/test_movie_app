@@ -1,4 +1,4 @@
-export enum MovieSort {
+export enum MovieSortOrderType {
   NAME = 'name',
   RATING = 'rating'
 }
