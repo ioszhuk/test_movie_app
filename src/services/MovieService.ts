@@ -1,27 +1,22 @@
 import {ApiService} from './ApiService';
-import {IMovie} from '../models/IMovie';
-import {IMovieSearch} from '../models/IMovieSearch';
+import {IMovie} from '../types/IMovie';
 
 export class MovieService {
-  private apiService;
+  private static API: ApiService = new ApiService();
 
-  constructor() {
-    this.apiService = new ApiService();
-  }
-
-  async getAll() {
-    const response = await this.apiService.getResource<IMovie[]>('/movies');
+  public static async getAll(): Promise<IMovie[]> {
+    const response = await MovieService.API.getResource<IMovie[]>('/movies');
     return response.data;
   }
 
-  async getOne(slug: string) {
-    const response = await this.apiService.getResource<IMovie>(`/movies/${slug}`);
+  public static async getOne(slug: string): Promise<IMovie> {
+    const response = await MovieService.API.getResource<IMovie>(`/movies/${slug}`);
     return response.data;
   }
 
-  async search(movieName: string) {
-    const data: IMovieSearch = {name: movieName};
-    const response = await this.apiService.postResource<IMovie[]>('movies/search', data);
+  public static async searchByName(name: string): Promise<IMovie[]> {
+    const url = `/movies/search/?name=${name}`;
+    const response = await MovieService.API.getResource<IMovie[]>(url);
     return response.data;
   }
 }

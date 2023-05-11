@@ -1,17 +1,17 @@
-import {Component, ErrorInfo} from 'react';
+import {Component, ErrorInfo, JSX} from 'react';
 import {ErrorIndicator} from '../ErrorIndicator/ErrorIndicator';
 import styles from './ErrorBoundary.module.scss';
 
-interface ErrorBoundaryProps {
+interface IErrorBoundaryProps {
   children: string | JSX.Element | JSX.Element[];
 }
 
-interface ErrorBoundaryState {
+interface IErrorBoundaryState {
   hasError: boolean;
 }
 
-export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  state: ErrorBoundaryState = {
+export class ErrorBoundary extends Component<IErrorBoundaryProps, IErrorBoundaryState> {
+  state: IErrorBoundaryState = {
     hasError: false
   };
 

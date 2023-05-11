@@ -1,10 +1,15 @@
 import {FC, useEffect, memo} from 'react';
 import {initTE, Select} from 'tw-elements';
+import {IMovieSortOrder} from '../../types/IMovieSortOrder';
 import styles from './MovieSort.module.scss';
-import {ISort} from '../../models/ISort';
-import {IMovieSort} from '../../models/IMovieSort';
 
-export const MovieSort: FC<IMovieSort> = memo(({items, activeItem, onChange}) => {
+interface IMovieSortProps {
+  items: IMovieSortOrder[];
+  activeItem: string;
+  onChange: (value: string) => void;
+}
+
+export const MovieSort: FC<IMovieSortProps> = memo(({items, activeItem, onChange}) => {
   useEffect(() => {
     initTE({Select});
   }, []);
@@ -16,7 +21,7 @@ export const MovieSort: FC<IMovieSort> = memo(({items, activeItem, onChange}) =>
   return (
     <div className={styles.sort}>
       <select data-te-select-init="" value={activeItem} onChange={(e) => onChange(e.target.value)}>
-        {items.map((item: ISort) => (
+        {items.map((item) => (
           <option key={item.id} value={item.id}>
             {item.name}
           </option>

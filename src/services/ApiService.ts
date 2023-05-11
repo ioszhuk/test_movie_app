@@ -1,23 +1,22 @@
 import axios, {AxiosInstance, AxiosResponse} from 'axios';
+import {constants} from '../constants';
 
 export class ApiService {
   private apiInstance: AxiosInstance;
 
-  private static CORRECT_SERVER_STATUS = 'OK';
-
   constructor() {
     this.apiInstance = axios.create({
-      baseURL: process.env.REACT_APP_API_BASE_URL
+      baseURL: constants.app.baseUrl
     });
   }
 
-  async getResource<T>(url: string): Promise<AxiosResponse<T>> {
+  public async getResource<T>(url: string): Promise<AxiosResponse<T>> {
     const response = await this.apiInstance.get<T>(url);
-    return response;
-  }
 
-  async postResource<T>(url: string, data: object): Promise<AxiosResponse<T>> {
-    const response = await this.apiInstance.post<T>(url, data);
+    if (response.status !== axios.HttpStatusCode.Ok) {
+      throw new Error(`Could not fetch ${url}, received: ${response.status}`);
+    }
+
     return response;
   }
 }

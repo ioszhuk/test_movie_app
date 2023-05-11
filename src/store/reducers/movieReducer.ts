@@ -1,10 +1,10 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {IMovie} from '../../models/IMovie';
-import {MovieSort} from '../../enums/MovieSort';
+import {IMovie} from '../../types/IMovie';
+import {MovieSortOrderType} from '../../enums/MovieSortOrderType';
+import {fetchMovies} from '../actionCreators/movieActionCreator';
 
-interface MovieState {
+interface IMovieState {
   movies: IMovie[];
-  currentMovie: IMovie | undefined;
   filter: string[];
   sortOrder: string;
   isLoading: boolean;
@@ -12,56 +12,44 @@ interface MovieState {
   error: string;
 }
 
-const initialState: MovieState = {
+const initialState: IMovieState = {
   movies: [],
-  currentMovie: undefined,
   filter: [],
-  sortOrder: MovieSort.NAME,
+  sortOrder: MovieSortOrderType.NAME,
   isLoading: false,
   isError: false,
   error: ''
 };
 
 const movieSlice = createSlice({
-  name: 'movie',
+  name: 'movies',
   initialState,
   reducers: {
-    moviesFetchingRequest(state) {
-      state.isLoading = true;
-    },
-    moviesFetchingSuccess(state, action: PayloadAction<IMovie[]>) {
-      state.isLoading = false;
-      state.isError = false;
-      state.error = '';
-      state.movies = action.payload;
-    },
-    currentMovieFetchingSuccess(state, action: PayloadAction<IMovie>) {
-      state.isLoading = false;
-      state.isError = false;
-      state.error = '';
-      state.currentMovie = action.payload;
-    },
     setMoviesFilter(state, action: PayloadAction<string[]>) {
       state.filter = action.payload;
     },
     setMoviesSortOrder(state, action: PayloadAction<string>) {
       state.sortOrder = action.payload;
-    },
-    moviesFetchingError(state, action: PayloadAction<string>) {
+    }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchMovies.pending.type, (state) => {
+      state.isLoading = true;
+    });
+
+    builder.addCase(fetchMovies.fulfilled.type, (state, action: PayloadAction<IMovie[]>) => {
+      state.isLoading = false;
+      state.movies = action.payload;
+    });
+
+    builder.addCase(fetchMovies.rejected.type, (state, action: PayloadAction<string>) => {
       state.isLoading = false;
       state.isError = true;
       state.error = action.payload;
-    }
+    });
   }
 });
 
-export const {
-  moviesFetchingRequest,
-  moviesFetchingSuccess,
-  currentMovieFetchingSuccess,
-  setMoviesFilter,
-  setMoviesSortOrder,
-  moviesFetchingError
-} = movieSlice.actions;
+export const {setMoviesFilter, setMoviesSortOrder} = movieSlice.actions;
 
 export const movieReducer = movieSlice.reducer;

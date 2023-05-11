@@ -1,15 +1,15 @@
-import React, {lazy, Suspense} from 'react';
+import React, {FC, lazy, Suspense} from 'react';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import {LoadingBoundary} from '../LoadingBoundary/LoadingBoundary';
+import {LoadingBoundary} from '../UI/LoadingBoundary/LoadingBoundary';
 import {Header} from '../Header/Header';
 import {Footer} from '../Footer/Footer';
-import {ErrorBoundary} from '../ErrorBoundary/ErrorBoundary';
+import {ErrorBoundary} from '../UI/ErrorBoundary/ErrorBoundary';
 
 const HomePage = lazy(() => import('../../pages/HomePage'));
 const MovieDetailPage = lazy(() => import('../../pages/MovieDetailPage'));
 const NotFoundPage = lazy(() => import('../../pages/NotFoundPage'));
 
-export const App = () => {
+export const App: FC = () => {
   return (
     <ErrorBoundary>
       <BrowserRouter>

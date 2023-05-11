@@ -7,20 +7,6 @@
 
 }
 
-.return_button {
-  border: 1px solid rgb(229, 231, 235);;
-  border-radius: 3px;
-  color: #fff;
-  text-align: center;
-  padding: 10px 32px;
-  background: transparent;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.05);
-  }
-
-}
-
 .movie_detail_item {
   display: flex;
   flex-direction: row;

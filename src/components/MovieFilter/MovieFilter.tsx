@@ -1,16 +1,15 @@
 import {FC, useEffect, memo} from 'react';
 import {initTE, Select} from 'tw-elements';
-import {IGenre} from '../../models/IGenre';
+import {IGenre} from '../../types/IGenre';
 import styles from './MovieFilter.module.scss';
 
-interface IFilterSelectList {
+interface IFilterSelectListProps {
   genres: IGenre[];
   activeItems: string[];
-  changeActiveItems: any;
+  onChange: (values: string[]) => void;
 }
 
-export const MovieFilter: FC<IFilterSelectList> = memo(({genres, activeItems, changeActiveItems}) => {
-
+export const MovieFilter: FC<IFilterSelectListProps> = memo(({genres, activeItems, onChange}) => {
   useEffect(() => {
     initTE({Select});
   }, []);
@@ -18,7 +17,7 @@ export const MovieFilter: FC<IFilterSelectList> = memo(({genres, activeItems, ch
   function onChangeSelect(targetId: string): void {
     const selectElement = document.querySelector(`#${targetId}`);
     const selectInstance = Select.getInstance(selectElement);
-    changeActiveItems(selectInstance.value);
+    onChange(selectInstance.value);
   }
 
   if (!genres.length) {
