@@ -15,15 +15,15 @@ export const MovieSearchContainer: FC = memo(() => {
 
   const searchMovies = async (query: string) => {
     try {
-      // if (query.length) {
-      //   const movies = await MovieService.searchByName(query);
-      //
-      //   setSearchResults(movies);
-      // } else {
-      //   setSearchResults([]);
-      // }
-    } catch (e: any) {
-      //setSearchResults([]);
+      if (query.length) {
+        const movies = await MovieService.searchByName(query);
+
+        setSearchResults(movies);
+      } else {
+        setSearchResults([]);
+      }
+    } catch (e) {
+      setSearchResults([]);
     }
   };
 

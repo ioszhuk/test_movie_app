@@ -1,17 +1,19 @@
-import React, {memo, useState} from 'react';
-import {useParams} from 'react-router-dom';
+import React, {memo, useState, useEffect} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../hooks/redux';
 import {MovieDetailView} from '../components/MovieDetailView/MovieDetailView';
 import {Loading} from '../components/UI/Loading/Loading';
-import {NotFound} from '../components/NotFound/NotFound';
 import {selectMovies} from '../store/selectors/movieSelector';
 import {IMovie} from '../types/IMovie';
+import {MovieService} from '../services/MovieService';
 
 type ParamsType = {
   slug: string;
 };
 
 const MovieDetailPage = memo(() => {
+  const navigate = useNavigate();
+
   const {slug} = useParams<ParamsType>();
 
   const dispatch = useAppDispatch();
@@ -23,17 +25,45 @@ const MovieDetailPage = memo(() => {
   const [isError, setIsError] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
-  // useEffect(() => {
-  //   if (!isHasMovies) {
-  //     dispatch(fetchMovies());
-  //   } else {
-  //     setCurrentMovie(movies.find((movie) => movie.slug === slug));
-  //   }
-  // }, [slug, movies, isHasMovies, dispatch]);
+  const fetchMovie = async (slug: string) => {
+    try {
+      setIsLoading(true);
+      const movie = await MovieService.getOne(slug);
+
+      if (movie) {
+        setCurrentMovie(movie);
+      } else {
+        navigate('/');
+      }
+    } catch (e: any) {
+      setIsError(true);
+      setError(e.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const findMovieBySlug = (slug: string) => {
+    if (movies.length) {
+      const movie = movies.find((movie) => movie.slug === slug);
+      if (movie) {
+        setCurrentMovie(movie);
+      } else {
+        fetchMovie(slug);
+      }
+    } else {
+      fetchMovie(slug);
+    }
+  };
+
+  useEffect(() => {
+    // @ts-ignore
+    findMovieBySlug(slug);
+  }, [dispatch, movies, slug]);
 
   return (
     <Loading isLoading={isLoading} isError={isError} error={error}>
-      {currentMovie ? <MovieDetailView movie={currentMovie} /> : <NotFound message="Movie not found" />}
+      {currentMovie ? <MovieDetailView movie={currentMovie} /> : ''}
     </Loading>
   );
 });
