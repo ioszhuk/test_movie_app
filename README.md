@@ -18,7 +18,6 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - [ReactJS](https://reactjs.org/)
 - [React Router](https://github.com/ReactTraining/react-router)
 - [Scss](http://sass-lang.com/)
-- [RxJS](https://rxjs.dev/)
 - [Redux](http://redux.js.org/)
 - [Redux Toolkit](https://redux-toolkit.js.org/)
 
