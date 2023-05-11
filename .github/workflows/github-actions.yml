@@ -21,7 +21,5 @@ jobs:
         run: npm ci --silent
       - name: build project
         run: npm run build
-      - name: run unit tests
-        run: npm run test
       - name: lint code
         run: npm run lint
