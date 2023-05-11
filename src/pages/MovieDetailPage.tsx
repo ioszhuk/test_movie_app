@@ -1,4 +1,4 @@
-import React, {memo, useState, useEffect} from 'react';
+import React, {memo, useState, useEffect, useCallback} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../hooks/redux';
 import {MovieDetailView} from '../components/MovieDetailView/MovieDetailView';
@@ -25,41 +25,46 @@ const MovieDetailPage = memo(() => {
   const [isError, setIsError] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
-  const fetchMovie = async (slug: string) => {
-    try {
-      setIsLoading(true);
-      const movie = await MovieService.getOne(slug);
+  const fetchMovie = useCallback(
+    async (slug: string) => {
+      try {
+        setIsLoading(true);
+        const movie = await MovieService.getOne(slug);
 
-      if (movie) {
-        setCurrentMovie(movie);
-      } else {
-        navigate('/');
+        if (movie) {
+          setCurrentMovie(movie);
+        } else {
+          navigate('/');
+        }
+      } catch (e: any) {
+        setIsError(true);
+        setError(e.message);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (e: any) {
-      setIsError(true);
-      setError(e.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    [navigate]
+  );
 
-  const findMovieBySlug = (slug: string) => {
-    if (movies.length) {
-      const movie = movies.find((movie) => movie.slug === slug);
-      if (movie) {
-        setCurrentMovie(movie);
+  const findMovieBySlug = useCallback(
+    (slug: string) => {
+      if (movies.length) {
+        const movie = movies.find((movie) => movie.slug === slug);
+        if (movie) {
+          setCurrentMovie(movie);
+        } else {
+          fetchMovie(slug);
+        }
       } else {
         fetchMovie(slug);
       }
-    } else {
-      fetchMovie(slug);
-    }
-  };
+    },
+    [fetchMovie, movies]
+  );
 
   useEffect(() => {
-    // @ts-ignore
-    findMovieBySlug(slug);
-  }, [dispatch, movies, slug]);
+    findMovieBySlug(`${slug}`);
+  }, [dispatch, findMovieBySlug, movies, slug]);
 
   return (
     <Loading isLoading={isLoading} isError={isError} error={error}>
