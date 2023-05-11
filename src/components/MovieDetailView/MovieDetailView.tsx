@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import {clsx} from 'clsx';
 import {IMovie} from '../../types/IMovie';
 import styles from './MovieDetailView.module.scss';
-import { Button } from "../UI/Button/Button";
+import {Button} from '../UI/Button/Button';
 
 interface IMovieDetailViewProps {
   movie: IMovie;
@@ -21,8 +21,7 @@ export const MovieDetailView: FC<IMovieDetailViewProps> = memo(({movie}) => {
   return (
     <div className={styles.movie_detail}>
       <div className={clsx('container', styles.container)}>
-
-        <Button text="&#8592; Go To Home Page" onClick={goHome}/>
+        <Button text="&#8592; Go To Home Page" onClick={goHome} />
 
         <div className={styles.movie_detail_item}>
           <div className={styles.movie_detail_item__poster}>
